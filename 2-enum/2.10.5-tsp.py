@@ -20,7 +20,7 @@ def TSP(W):
         if len(tour) > 1:
             w += W[tour[-2]][tour[-1]]
         if bestW is not None and bestW < w:
-            cuts.append(tour)
+            cuts.append(tour[:])
             return
         if len(tour) == len(W):
             yield w + W[tour[-1]][tour[0]]
@@ -43,7 +43,7 @@ def TSP(W):
 
     print(bestW)
     print(*bestTour)
-    print('// cuts:', len(cuts))
+    print('// cuts:', len(cuts), 'len >=', min(len(cut) for cut in cuts))
     print('// branches:', branches)
 
 TSP(W)
