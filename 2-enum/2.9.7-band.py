@@ -30,3 +30,5 @@ def bands(n, m, head=''):
 from itertools import islice
 print(*islice(bands(7, 3), 6, 7))
 # print(*bands(7, 3), sep='\n')
+
+print(*islice(bands(25, 8), 24007, 24008))
