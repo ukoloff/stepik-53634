@@ -1,4 +1,4 @@
-def bands(n, m, head=''):
+def bands(n, m):
     """
     Расстановка фишек. Имеется полоса размера 1×n,
     разбитая на единичные клетки.
@@ -6,19 +6,19 @@ def bands(n, m, head=''):
     чтобы никакие две фишки не стояли в соседних клетках.
     Выведите все возможные расстановки.
 
-    Входные данные: Натуральные числа nn и mm.
+    Входные данные: Натуральные числа n и m.
     """
     if m == 0:
         if n >= 0:
-            yield head + '.' * n
+            yield '.' * n
         return
     if n < 2 * m - 1:
         return
     if n == 2 * m - 1:
-        yield head + ('.*' * m)[1:]
+        yield ('.*' * m)[1:]
         return
-    yield from bands(n - 2, m - 1, head + '*.')
-    yield from bands(n - 1, m, head + '.')
+    yield from ('*.' + tail for tail in bands(n - 2, m - 1))
+    yield from ('.' + tail for tail in bands(n - 1, m))
 
 # print(*bands(5, 2), sep='\n')
 # z = bands(5, 2)
