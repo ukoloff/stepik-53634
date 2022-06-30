@@ -5,7 +5,7 @@ def brackets(n):
     if len(head) == 2 * n:
       yield head
       return
-    for bra, ket in ('()', '[]'):
+    for bra, ket in '() []'.split():
       if len(head) + len(stack) < 2 * n:
         stack.append(bra)
         yield from rec(head + bra)
