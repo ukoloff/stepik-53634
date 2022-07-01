@@ -7,9 +7,20 @@ def read(filename):
                 for i in range(int(f.readline()))]
 
 
+factorial_cache = [1]
+
+
+def factorial(n):
+    for i in range(len(factorial_cache), n + 1):
+        factorial_cache.append(i * factorial_cache[-1])
+    return factorial_cache[n]
+
+
 def TSP(W):
     tour = [0]
-    nodes = [*range(1, len(W))]
+    N = len(W)
+    problemSpace = factorial(N)
+    nodes = [*range(1, N)]
     used = [0] * len(nodes)
     shuffle(nodes)
     bestW = None
@@ -24,10 +35,11 @@ def TSP(W):
         if bestW is not None and bestW < w:
             nonlocal cuts, shortestCut, cutBranches
             cuts += 1
+            cutBranches += factorial(N - len(tour))
             if shortestCut is None or shortestCut > len(tour):
                 shortestCut = len(tour)
             return
-        if len(tour) == len(W):
+        if len(tour) == N:
             yield w + W[tour[-1]][tour[0]]
             return
         for i in range(len(nodes)):
@@ -48,7 +60,7 @@ def TSP(W):
 
     print(bestW)
     print(*bestTour)
-    print('// cuts:', cuts, 'len >=', shortestCut)
+    print('// cuts:', cuts, 'len >=', shortestCut, 'branches =', cutBranches)
     print('// branches:', branches)
 
 
