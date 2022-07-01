@@ -12,7 +12,7 @@ def TSP(W):
     tour = [0]
     nodes = [*range(1, len(W))]
     used = [0] * len(nodes)
-    # shuffle(nodes)
+    shuffle(nodes)
     bestW = None
     bestTour = None
     cuts = [0, None]
@@ -40,10 +40,9 @@ def TSP(W):
     branches = 0
     for w in rec():
         branches += 1
-        if bestW is None or w < bestW:
-            bestW = w
-            bestTour = tour[:]
-            print(bestW, end='\t', flush=True)
+        if bestW is None or (w, tour) < (bestW, bestTour):
+            bestW, bestTour = w, tour[:]
+            # print(bestW, end='\t', flush=True)
 
     print(bestW)
     print(*bestTour)
