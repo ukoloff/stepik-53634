@@ -2,6 +2,7 @@ from random import shuffle
 
 # f = open('tsp.in')
 f = open('salesman.in')
+# f = open('tsplib/br17.tsp')
 
 W = [[int(z) for z in f.readline().strip().split()]
      for i in range(int(f.readline()))]
@@ -14,13 +15,15 @@ def TSP(W):
     # shuffle(nodes)
     bestW = None
     bestTour = None
-    cuts = []
+    cuts = [0, None]
 
     def rec(w=0):
         if len(tour) > 1:
             w += W[tour[-2]][tour[-1]]
         if bestW is not None and bestW < w:
-            cuts.append(tour[:])
+            cuts[0] += 1
+            if cuts[1] is None or cuts[1] > len(tour):
+              cuts[1] = len(tour)
             return
         if len(tour) == len(W):
             yield w + W[tour[-1]][tour[0]]
@@ -40,10 +43,11 @@ def TSP(W):
         if bestW is None or w < bestW:
             bestW = w
             bestTour = tour[:]
+            print(bestW, end='\t', flush=True)
 
     print(bestW)
     print(*bestTour)
-    print('// cuts:', len(cuts), 'len >=', min(len(cut) for cut in cuts))
+    print('// cuts:', cuts[0], 'len >=', cuts[1])
     print('// branches:', branches)
 
 TSP(W)
