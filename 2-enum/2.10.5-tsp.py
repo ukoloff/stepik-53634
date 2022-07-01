@@ -1,11 +1,10 @@
 from random import shuffle
 
-# f = open('tsp.in')
-f = open('salesman.in')
-# f = open('tsplib/br17.tsp')
 
-W = [[int(z) for z in f.readline().strip().split()]
-     for i in range(int(f.readline()))]
+def read(filename):
+    with open(filename) as f:
+        return [[int(z) for z in f.readline().strip().split()]
+                for i in range(int(f.readline()))]
 
 
 def TSP(W):
@@ -15,15 +14,18 @@ def TSP(W):
     shuffle(nodes)
     bestW = None
     bestTour = None
-    cuts = [0, None]
+    cuts = 0
+    shortestCut = None
+    cutBranches = 0
 
     def rec(w=0):
         if len(tour) > 1:
             w += W[tour[-2]][tour[-1]]
         if bestW is not None and bestW < w:
-            cuts[0] += 1
-            if cuts[1] is None or cuts[1] > len(tour):
-              cuts[1] = len(tour)
+            nonlocal cuts, shortestCut, cutBranches
+            cuts += 1
+            if shortestCut is None or shortestCut > len(tour):
+                shortestCut = len(tour)
             return
         if len(tour) == len(W):
             yield w + W[tour[-1]][tour[0]]
@@ -46,7 +48,10 @@ def TSP(W):
 
     print(bestW)
     print(*bestTour)
-    print('// cuts:', cuts[0], 'len >=', cuts[1])
+    print('// cuts:', cuts, 'len >=', shortestCut)
     print('// branches:', branches)
 
-TSP(W)
+
+# TSP(read('tsp.in'))
+TSP(read('salesman.in'))
+# TSP(read('tsplib/br17.tsp'))
