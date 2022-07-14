@@ -18,3 +18,4 @@ for j, N in enumerate(Y):
 m.objective = ts.sum()
 m.sense = MAX
 m.write('turbo.mip.lp')
+m.optimize()
