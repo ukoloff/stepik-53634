@@ -1,16 +1,24 @@
 \Problem name: 
 
 Minimize
-OBJROW: - turbines_0_0 - turbines_0_1 - turbines_0_2 - turbines_0_3 - turbines_0_4 - turbines_1_0 - turbines_1_1 - turbines_1_2 - turbines_1_3 - turbines_1_4
- - turbines_2_0 - turbines_2_1 - turbines_2_2 - turbines_2_3 - turbines_2_4
+OBJROW: -9 T_0_0 -9 T_0_1 -9 T_0_2 -9 T_0_3 -9 T_0_4 -7 T_1_0 -7 T_1_1 -7 T_1_2 -7 T_1_3 -7 T_1_4
+ -13 T_2_0 -13 T_2_1 -13 T_2_2 -13 T_2_3 -13 T_2_4
 Subject To
-Type_0:  turbines_0_0 + turbines_0_1 + turbines_0_2 + turbines_0_3 + turbines_0_4 <= 2
-Type_1:  turbines_1_0 + turbines_1_1 + turbines_1_2 + turbines_1_3 + turbines_1_4 <= 4
-Type_2:  turbines_2_0 + turbines_2_1 + turbines_2_2 + turbines_2_3 + turbines_2_4 <= 7
-Dist_0:  3 turbines_0_0 + 4 turbines_1_0 + 5 turbines_2_0 <= 6
-Dist_1:  3 turbines_0_1 + 4 turbines_1_1 + 5 turbines_2_1 <= 7
-Dist_2:  3 turbines_0_2 + 4 turbines_1_2 + 5 turbines_2_2 <= 8
-Dist_3:  3 turbines_0_3 + 4 turbines_1_3 + 5 turbines_2_3 <= 9
-Dist_4:  3 turbines_0_4 + 4 turbines_1_4 + 5 turbines_2_4 <= 10
+Type_1:  T_0_0 + T_0_1 + T_0_2 + T_0_3 + T_0_4 <= 4
+Type_2:  T_1_0 + T_1_1 + T_1_2 + T_1_3 + T_1_4 <= 7
+Type_3:  T_2_0 + T_2_1 + T_2_2 + T_2_3 + T_2_4 <= 2
+Dist_1:  T_0_0 + T_1_0 + T_2_0 <= 5
+Dist_2:  T_0_1 + T_1_1 + T_2_1 <= 3
+Dist_3:  T_0_2 + T_1_2 + T_2_2 <= 10
+Dist_4:  T_0_3 + T_1_3 + T_2_3 <= 2
+Dist_5:  T_0_4 + T_1_4 + T_2_4 <= 4
+Sum_1:  9 T_0_0 + 7 T_1_0 + 13 T_2_0 <= 150
+Sum_2:  9 T_0_1 + 7 T_1_1 + 13 T_2_1 <= 200
+Sum_3:  9 T_0_2 + 7 T_1_2 + 13 T_2_2 <= 350
+Sum_4:  9 T_0_3 + 7 T_1_3 + 13 T_2_3 <= 40
+Sum_5:  9 T_0_4 + 7 T_1_4 + 13 T_2_4 <= 120
 Bounds
+Integers
+T_0_0 T_0_1 T_0_2 T_0_3 T_0_4 T_1_0 T_1_1 T_1_2 T_1_3 T_1_4 
+T_2_0 T_2_1 T_2_2 T_2_3 T_2_4 
 End

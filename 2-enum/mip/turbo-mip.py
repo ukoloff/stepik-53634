@@ -1,21 +1,36 @@
-from mip import *
+from mip import Model
+import numpy as np
 
-m = Model(solver_name=CBC)
+max_by_type =[4, 7, 2]
+max_by_dist = [5, 3, 10, 2, 4]
+speed_by_type = [9, 7, 13]
+max_sum = [150, 200, 350, 40, 120]
 
-ts = m.add_var_tensor((3, 5), 'turbines')
+m = Model(solver_name='CBC')
 
-X = [2, 4, 7]
-for i, N in enumerate(X):
-  m.add_constr(sum(ts[i]) <= X[i], f"Type_{i}")
+ts = m.add_var_tensor((3, 5), 'T', var_type='I')
 
-speeds = [3, 4, 5]
-tss = np.array(speeds).reshape(-1, 1) * ts
+for i, N in enumerate(max_by_type):
+  m.add_constr(sum(ts[i]) <= max_by_type[i], f"Type_{i+1}")
 
-Y = [6, 7, 8, 9, 10]
-for j, N in enumerate(Y):
-  m.add_constr(sum(tss[:, j]) <= N, f'Dist_{j}')
+for j, N in enumerate(max_by_dist):
+  m.add_constr(sum(ts[:, j]) <= max_by_dist[j], f"Dist_{j+1}")
 
-m.objective = ts.sum()
-m.sense = MAX
+tss = ts * np.array(speed_by_type)[:, None]
+
+for j, N in enumerate(max_sum):
+  m.add_constr(sum(tss[:, j]) <= N, f'Sum_{j+1}')
+
+m.objective = tss.sum()
+m.sense = 'MAX'
+m.verbose = 0
+
 m.write('turbo.mip.lp')
+
 m.optimize()
+print("Status =", m.status)
+
+counts = np.vectorize(lambda z: int(z.x))(ts)
+print(counts)
+for ax in range(2):
+  print(*counts.sum(axis=ax))
