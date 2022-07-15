@@ -11,10 +11,10 @@ m = Model(solver_name='CBC')
 ts = m.add_var_tensor((3, 5), 'T', var_type='I')
 
 for i, N in enumerate(max_by_type):
-  m.add_constr(sum(ts[i]) <= max_by_type[i], f"Type_{i+1}")
+  m.add_constr(sum(ts[i]) <= N, f"Type_{i+1}")
 
 for j, N in enumerate(max_by_dist):
-  m.add_constr(sum(ts[:, j]) <= max_by_dist[j], f"Dist_{j+1}")
+  m.add_constr(sum(ts[:, j]) <= N, f"Dist_{j+1}")
 
 tss = ts * np.array(speed_by_type)[:, None]
 
