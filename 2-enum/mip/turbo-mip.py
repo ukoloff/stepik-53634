@@ -29,6 +29,7 @@ m.write('turbo.mip.lp')
 
 m.optimize()
 print("Status =", m.status)
+print('Objective =', m.objective_value)
 
 counts = np.vectorize(lambda z: int(z.x))(ts)
 print(counts)
