@@ -24,14 +24,12 @@ def model(weights):
       for v in X.sum(axis=axis):
         m += v == 1
     for i in range(1, Y.shape[0]):
-      for j in range(1, Y.shape[0]):
-        if i == j:
-          continue
+      for j in range(1, i):
         m += Y[i, j] >= X[i, j]
-        if i < j:
-          m += Y[i, j] + Y[j, i] == 1
-        for k in range(1, Y.shape[0]):
-          if i == k or j == k:
+        m += Y[j, i] >= X[j, i]
+        m += Y[i, j] + Y[j, i] == 1
+        for k in range(1, i):
+          if j == k:
             continue
           m += Y[i, j] + Y[j, k] + Y[k, i] <= 2
     # m.write('atspxy.lp')
@@ -54,8 +52,8 @@ def dump_tours(X):
   print(*tour)
 
 
-# z = read('../tsp.in')
-z = read('../salesman.in')
+z = read('../tsp.in')
+# z = read('../salesman.in')
 # z = read('../tsplib/br17.tsp')
 # z = read('../tsplib/bayg29.tsp')
 m, X = model(z)
