@@ -23,9 +23,29 @@ def model(weights):
     # m.write('cc.lp')
     return m, X
 
+def dump_tours(X):
+  z = dict(np.argwhere(np.vectorize(lambda z: z.x)(X)))
+  tour = []
+  queue = set(z.keys())
+  while len(queue):
+    cycle = []
+    tour.append(cycle)
+    x = min(queue)
+    while True:
+      cycle.append(x)
+      queue.remove(x)
+      x = z[x]
+      if x not in queue:
+        break
+  print(*tour)
 
+
+# z = read('../tsp.in')
 z = read('../salesman.in')
+# z = read('../tsplib/br17.tsp')
+# z = read('../tsplib/bayg29.tsp')
 m, X = model(z)
 m.optimize()
-X = np.vectorize(lambda z: z.x)(X)
-print(X)
+print('Len =', m.objective_value)
+# print(X)
+dump_tours(X)
