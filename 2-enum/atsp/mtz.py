@@ -15,7 +15,7 @@ def model(weights):
     X = m.add_var_tensor(weights.shape, var_type=BINARY, name='x')
     Y = m.add_var_tensor(weights.shape[:1], name='y')
 
-    m.sense = 'MAX'
+    m.sense = 'MIN'
     m.verbose = False
     m.objective = (z * X).sum()
     for v in X.diagonal():

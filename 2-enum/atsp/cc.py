@@ -12,7 +12,7 @@ def read(filename):
 def model(weights):
     m = Model(solver_name='CBC', name='Cycle Cover')
     X = m.add_var_tensor(weights.shape, var_type=BINARY, name='x')
-    m.sense = 'MAX'
+    m.sense = 'MIN'
     m.verbose = False
     m.objective = (z * X).sum()
     for v in X.diagonal():
