@@ -24,13 +24,15 @@ def model(weights):
       for v in X.sum(axis=axis):
         m += v == 1
     for i in range(1, Y.shape[0]):
-      for j in range(1, i):
+      for j in range(1, Y.shape[0]):
         if i == j:
           continue
         m += Y[i, j] >= X[i, j]
-        m += Y[j, i] >= X[j, i]
-        m += Y[i, j] + Y[j, i] == 1
-        for k in range(1, j):
+        if i < j:
+          m += Y[i, j] + Y[j, i] == 1
+        for k in range(1, Y.shape[0]):
+          if i == k or j == k:
+            continue
           m += Y[i, j] + Y[j, k] + Y[k, i] <= 2
     # m.write('atsp.lp')
     return m, X
