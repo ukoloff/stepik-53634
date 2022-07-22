@@ -11,7 +11,7 @@ def read(filename):
 
 
 def model(weights):
-    m = Model(solver_name='CBC', name='Cycle Cover')
+    m = Model(solver_name='CBC', name='ATSPxy')
     X = m.add_var_tensor(weights.shape, var_type=BINARY, name='x')
     Y = m.add_var_tensor(weights.shape, name='y')
 
@@ -34,7 +34,7 @@ def model(weights):
           if i == k or j == k:
             continue
           m += Y[i, j] + Y[j, k] + Y[k, i] <= 2
-    # m.write('atsp.lp')
+    # m.write('atspxy.lp')
     return m, X
 
 def dump_tours(X):

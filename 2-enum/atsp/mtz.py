@@ -11,7 +11,7 @@ def read(filename):
 
 
 def model(weights):
-    m = Model(solver_name='CBC', name='Cycle Cover')
+    m = Model(solver_name='CBC', name='MTZ')
     X = m.add_var_tensor(weights.shape, var_type=BINARY, name='x')
     Y = m.add_var_tensor(weights.shape[:1], name='y')
 
