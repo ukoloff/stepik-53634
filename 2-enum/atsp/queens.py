@@ -27,10 +27,16 @@ def out(Q):
     print(*np.vectorize(attrgetter('x'))(Q).nonzero())
 
 
-for i in range(2, 11):
+for i in range(2, 9):
     m, Q = model(i)
     # m.write('q3.lp')
     m.optimize()
     print(i, int(m.objective_value))
+
+out(Q)
+
+m, Q = model(50)
+m.optimize()
+print(int(m.objective_value))
 
 out(Q)
