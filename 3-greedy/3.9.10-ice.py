@@ -10,5 +10,6 @@ for name in names:
         continue
     count += 1
     seen.clear()
+    seen.add(name)
 
 print(count)
