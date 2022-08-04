@@ -1,4 +1,4 @@
-f = open('bug.in')
+f = open('bug2.in')
 costs = [[int(z) for z in line.split()]for line in f]
 
 
@@ -34,7 +34,8 @@ def gather(costs):
         else:
             break
         path.append(c)
-    return ''.join(reversed(path))
+    print(bests[-1][-1])
+    print(''.join(reversed(path)))
 
 
-print(gather(costs))
+gather(costs)
