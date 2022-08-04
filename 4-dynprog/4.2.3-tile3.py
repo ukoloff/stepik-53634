@@ -1,7 +1,8 @@
 def tiles3(n):
-  if n < 3:
-    return 1
-  return tiles3(n-1) + tiles3(n-3)
+  a, b, c = 1, 1, 1
+  for i in range(n):
+    a, b, c = b, c, a + c
+  return a
 
 for i in range(21):
   print(i, tiles3(i))
