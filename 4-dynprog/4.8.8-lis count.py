@@ -6,17 +6,15 @@ seq = [int(z) for z in f.readline().split()]
 
 
 def lis(seq):
-    def my_max(lst):
+    def my_max(lst, add=0):
         if len(lst) == 0:
-            return [0, 1]
+            return (add, 1)
         maximum = max(z[0] for z in lst)
-        return [maximum, sum(z[1] for z in lst if z[0] == maximum)]
+        return (maximum + add, sum(z[1] for z in lst if z[0] == maximum))
 
     L = []
     for n in seq:
-        z = my_max([z for i, z in enumerate(L) if seq[i] < n])
-        z[0] += 1
-        L.append(z)
+        L.append(my_max([z for i, z in enumerate(L) if seq[i] < n], add=1))
     return my_max(L)
 
 
